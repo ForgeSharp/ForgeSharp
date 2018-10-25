@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DNet.Core;
+using ForgeSharp.Core;
 using DNet.Structures;
 
-namespace DNet.Commands {
+namespace ForgeSharp.Commands {
     public class CommandHandler {
         private readonly Dictionary<string, Type> commands;
 

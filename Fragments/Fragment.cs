@@ -1,6 +1,6 @@
 using System;
 
-namespace DNet.Fragments
+namespace ForgeSharp.Fragments
 {
     public interface IFragment
     {

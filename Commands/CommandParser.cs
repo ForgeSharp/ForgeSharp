@@ -1,6 +1,6 @@
 using DNet.Structures;
 
-namespace DNet.Commands {
+namespace ForgeSharp.Commands {
     public static class CommandParser
     {
         public static string GetBase(string commandString, string prefix)

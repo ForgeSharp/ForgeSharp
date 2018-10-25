@@ -1,9 +1,9 @@
 using System;
-using DNet.Core;
-using DNet.Fragments;
+using ForgeSharp.Core;
+using ForgeSharp.Fragments;
 using DNet.Structures;
 
-namespace DNet.Commands
+namespace ForgeSharp.Commands
 {
     public abstract class GenericCommand : IPackage, IDisposable
     {

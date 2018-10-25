@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using DNet.Commands;
+using ForgeSharp.Commands;
 using DNet.Structures;
 
-namespace DNet.Core
+namespace ForgeSharp.Core
 {
     public struct BotOptions
     {

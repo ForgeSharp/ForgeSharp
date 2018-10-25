@@ -1,7 +1,7 @@
-using DNet.Core;
+using ForgeSharp.Core;
 using DNet.Structures;
 
-namespace DNet.Commands
+namespace ForgeSharp.Commands
 {
     public class Context
     {
