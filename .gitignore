@@ -3,3 +3,4 @@ obj/
 build/
 .vscode/
 *.log
+paket-files/
