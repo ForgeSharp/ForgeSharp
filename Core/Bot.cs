@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using ForgeSharp.Commands;
 using DNet.Structures;
+using DNet;
 
 namespace ForgeSharp.Core
 {
