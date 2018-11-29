@@ -40,14 +40,15 @@ namespace ForgeSharp.Core
                 {
                     var commandBase = CommandParser.GetBase(message.content, this.Options.Prefix);
 
-                    System.Console.WriteLine($"Command base: {commandBase}");
+                    Console.WriteLine($"Command base: {commandBase}");
 
                     if (this.CommandHandler.IsRegistered(commandBase))
                     {
-                        System.Console.WriteLine("Is registered");
+                        Console.WriteLine("Is registered");
+
                         if (!this.CommandHandler.RunIgnoringConditions(commandBase, new Context()
                         {
-                            Bot = Program.Bot,
+                            Bot = this,
                             Message = message
                         }))
                         {

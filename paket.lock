@@ -1,4 +1,4 @@
 
-GITHUB
-  remote: cloudrex/dnet
-    FULLPROJECT (7121ce4b428cf5327ef332d36c1802d1a7846e3d)
+GIT
+  remote: git@github.com:cloudrex/dnet.git
+     (9273fbd594aef15aad01194a1dcbc828c91883e8)
