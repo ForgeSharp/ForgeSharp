@@ -1,3 +1,3 @@
 source https://www.nuget.org/api/v2
-git https://github.com/cloudrex/dnet.git master build: "build.cmd", OS: windows
+git https://github.com/cloudrex/dnet.git master build: "build.bat", OS: windows
 git https://github.com/cloudrex/dnet.git master build: "build.sh", OS: mono
