@@ -38,7 +38,17 @@ namespace ForgeSharp.Core
 
             handle.OnMessageCreate += (object sender, Message message) =>
             {
-                if (message.Content.StartsWith(this.Options.Prefix))
+                // Ignore empty messages
+                if (message.Content == null)
+                {
+                    return;
+                }
+                // Ignore bots
+                else if (this.Options.IgnoreBots && message.Author.Bot == true)
+                {
+                    return;
+                }
+                else if (message.Content.StartsWith(this.Options.Prefix))
                 {
                     string commandBase = CommandParser.GetBase(message.Content, this.Options.Prefix);
 

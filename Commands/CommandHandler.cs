@@ -84,12 +84,8 @@ namespace ForgeSharp.Commands {
 
         private Command ActivateCommandInstance(Type commandType)
         {
-            if (commandType == typeof(GenericCommand))
-            {
-                return (Command)Activator.CreateInstance(commandType);
-            }
-
-            throw new Exception("Unknown command type");
+            // TODO: Must ensure type to be instanceof Command or GenericCommand
+            return (Command)Activator.CreateInstance(commandType);
         }
     }
 }
