@@ -11,7 +11,7 @@ namespace ForgeSharp.Commands
 
         public void Reply(string message, bool mention = true)
         {
-            this.Bot.Client.CreateMessage(this.Message.channelId, mention ? $"<@{this.Message.author.id}>, {message}" : message);
+            this.Bot.Client.CreateMessage(this.Message.ChannelId, mention ? $"<@{this.Message.Author.Id}>, {message}" : message);
         }
     }
 }

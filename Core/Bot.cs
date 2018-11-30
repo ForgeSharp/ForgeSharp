@@ -3,12 +3,14 @@ using System.Threading.Tasks;
 using ForgeSharp.Commands;
 using DNet.Structures;
 using DNet;
+using DNet.Socket;
 
 namespace ForgeSharp.Core
 {
     public struct BotOptions
     {
         public string Prefix { get; set; }
+
         public bool IgnoreBots { get; set; }
     }
 
@@ -32,20 +34,16 @@ namespace ForgeSharp.Core
 
         private void SetupEvents()
         {
-            var handle = this.Client.GetHandle();
+            SocketHandle handle = this.Client.GetHandle();
 
-            handle.OnMessageCreate += (Message message) =>
+            handle.OnMessageCreate += (object sender, Message message) =>
             {
-                if (message.content.StartsWith(this.Options.Prefix))
+                if (message.Content.StartsWith(this.Options.Prefix))
                 {
-                    var commandBase = CommandParser.GetBase(message.content, this.Options.Prefix);
-
-                    Console.WriteLine($"Command base: {commandBase}");
+                    string commandBase = CommandParser.GetBase(message.Content, this.Options.Prefix);
 
                     if (this.CommandHandler.IsRegistered(commandBase))
                     {
-                        Console.WriteLine("Is registered");
-
                         if (!this.CommandHandler.RunIgnoringConditions(commandBase, new Context()
                         {
                             Bot = this,

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ForgeSharp.Core;
-using DNet.Structures;
 
 namespace ForgeSharp.Commands {
     public class CommandHandler {
@@ -13,9 +11,10 @@ namespace ForgeSharp.Commands {
             this.commands = new Dictionary<string, Type>();
         }
 
+        // TODO: Verify type is typeof(Command)?
         public CommandHandler RegisterCommand(Type command)
         {
-            var commandNameAttribute = command.GetCustomAttributes(typeof(CommandName), true).FirstOrDefault() as CommandName;
+            CommandName commandNameAttribute = command.GetCustomAttributes(typeof(CommandName), true).FirstOrDefault() as CommandName;
 
             if (commandNameAttribute != null)
             {
@@ -23,6 +22,16 @@ namespace ForgeSharp.Commands {
             }
             else {
                 throw new Exception($"Command class '{command.Name}' is missing required CommandName attribute");
+            }
+
+            return this;
+        }
+
+        public CommandHandler RegisterCommands(params Type[] commands)
+        {
+            for (int i = 0; i < commands.Length; i++)
+            {
+                this.RegisterCommand(commands[i]);
             }
 
             return this;

@@ -10,7 +10,7 @@ namespace ForgeSharp.Commands {
 
         public static string GetBase(Message message, string prefix)
         {
-            return CommandParser.GetBase(message.content, prefix);
+            return CommandParser.GetBase(message.Content, prefix);
         }
     }
 }
