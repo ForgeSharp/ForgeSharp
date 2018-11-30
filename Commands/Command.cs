@@ -8,13 +8,12 @@ namespace ForgeSharp.Commands
     public abstract class GenericCommand : IPackage, IDisposable
     {
         public abstract string Name { get; }
-        public abstract string Description { get; }
-        public abstract string Author { get; }
-        public abstract string Version { get; }
 
-        protected readonly Bot Bot;
-        protected readonly Message Message;
-        protected readonly Message Msg;
+        public abstract string Description { get; }
+
+        public abstract string Author { get; }
+
+        public abstract string Version { get; }
 
         public abstract void Run(Context context);
 

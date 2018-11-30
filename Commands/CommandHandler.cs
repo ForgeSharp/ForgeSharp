@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ForgeSharp.Commands {
     public class CommandHandler {
@@ -85,7 +84,12 @@ namespace ForgeSharp.Commands {
 
         private Command ActivateCommandInstance(Type commandType)
         {
-            return (Command)Activator.CreateInstance(commandType);
+            if (commandType == typeof(GenericCommand))
+            {
+                return (Command)Activator.CreateInstance(commandType);
+            }
+
+            throw new Exception("Unknown command type");
         }
     }
 }
