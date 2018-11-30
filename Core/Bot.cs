@@ -44,7 +44,7 @@ namespace ForgeSharp.Core
 
                     if (this.CommandHandler.IsRegistered(commandBase))
                     {
-                        if (!this.CommandHandler.RunIgnoringConditions(commandBase, new Context()
+                        if (!this.CommandHandler.Run(commandBase, new Context()
                         {
                             Bot = this,
                             Message = message

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ForgeSharp.Commands {
     public class CommandHandler {
@@ -42,10 +43,29 @@ namespace ForgeSharp.Commands {
             return this.commands.GetValueOrDefault(name, null);
         }
 
+        public bool Run(string name, Context context)
+        {
+            if (!this.IsRegistered(name))
+            {
+                return false;
+            }
+
+            Command instance = this.CreateCommandInstance(name);
+
+            if (!instance.MayRun(context))
+            {
+                return false;
+            }
+
+            instance.Run(context);
+
+            return true;
+        }
+
         public bool RunIgnoringConditions(string name, Context context)
         {
             if (this.IsRegistered(name)) {
-                this.CreateCommandInstance(this.GetCommandType(name)).Run(context);
+                this.CreateCommandInstance(name).Run(context);
 
                 return true;
             }
@@ -58,7 +78,12 @@ namespace ForgeSharp.Commands {
             return this.commands.ContainsKey(name);
         }
 
-        private Command CreateCommandInstance(Type commandType)
+        private Command CreateCommandInstance(string name)
+        {
+            return this.ActivateCommandInstance(this.GetCommandType(name));
+        }
+
+        private Command ActivateCommandInstance(Type commandType)
         {
             return (Command)Activator.CreateInstance(commandType);
         }
