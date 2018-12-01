@@ -8,14 +8,16 @@ using ForgeSharp.Services;
 
 namespace ForgeSharp.Core
 {
-    public struct BotOptions
+    public class BotOptions
     {
-        public string Prefix { get; set; }
+        public string Prefix { get; set; } = "!";
 
-        public bool IgnoreBots { get; set; }
+        public bool IgnoreBots { get; set; } = true;
+
+        public bool CaseSensitive { get; set; } = true;
     }
 
-    public class Bot
+    public class Bot : IDisposable
     {
         public readonly string Token;
         public readonly CommandHandler CommandHandler;
@@ -44,6 +46,7 @@ namespace ForgeSharp.Core
 
         private void HandleMessage(object sender, Message message)
         {
+            // TODO: Message.Content should be automatically trimmed by DNet upon being received
             // Ignore empty messages
             if (message.Content == null)
             {
@@ -57,6 +60,11 @@ namespace ForgeSharp.Core
             else if (message.Content.StartsWith(this.Options.Prefix))
             {
                 string commandBase = CommandParser.GetBase(message.Content, this.Options.Prefix);
+
+                if (!this.Options.CaseSensitive)
+                {
+                    commandBase = commandBase.ToLower();
+                }
 
                 if (this.CommandHandler.IsRegistered(commandBase))
                 {
@@ -75,6 +83,22 @@ namespace ForgeSharp.Core
         public Task Connect()
         {
             return this.Client.Connect(this.Token);
+        }
+
+        public void Shutdown(int code = 0)
+        {
+            this.Dispose();
+            Environment.Exit(code);
+        }
+
+        // TODO: Figure a way to provide a callback for all the events inside (delegate)
+        public void Dispose()
+        {
+            // TODO: Stop the client
+            this.Client.Dispose();
+
+            // Stop all services
+            this.ServiceManager.StopAll();
         }
     }
 }

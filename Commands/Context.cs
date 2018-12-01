@@ -9,9 +9,10 @@ namespace ForgeSharp.Commands
         public Bot Bot { get; set; }
         public Message Message { get; set; }
 
-        public void Reply(string message, bool mention = true)
+        public void Reply(string message, bool mention = false)
         {
-            this.Bot.Client.CreateMessage(this.Message.ChannelId, mention ? $"<@{this.Message.Author.Id}>, {message}" : message);
+            // TODO: Verified email?
+            this.Bot.Client.CreateMessage(this.Message.ChannelId, mention ? $"{Utils.Mention(this.Message.Author.Id)}, {message}" : message);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ForgeSharp.Fragments
 {
@@ -13,7 +12,7 @@ namespace ForgeSharp.Fragments
         public bool Register(FragmentType fragment)
         {
             // TODO: May override already existing fragments
-            this.fragments.Add(fragment.Name, fragment);
+            this.fragments.Add(fragment.Name.Trim().ToLower(), fragment);
 
             return false;
         }

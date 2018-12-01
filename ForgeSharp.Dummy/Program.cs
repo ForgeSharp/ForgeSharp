@@ -33,7 +33,9 @@ namespace DummyForgeSharpBot
 
             // Register commands
             bot.CommandHandler.RegisterMultipleByType(
-                typeof(Commands.Hello)
+                typeof(Commands.Hello),
+                typeof(ForgeSharp.Premade.Commands.Ping),
+                typeof(ForgeSharp.Premade.Commands.Stop)
             );
 
             // TODO: Application will not stop

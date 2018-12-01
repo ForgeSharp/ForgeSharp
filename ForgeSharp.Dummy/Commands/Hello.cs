@@ -1,9 +1,7 @@
 ﻿using ForgeSharp.Commands;
-using ForgeSharp.Fragments;
 
 namespace DummyForgeSharpBot.Commands
 {
-    [FragmentIdentifier("hello")]
     public class Hello : GenericCommand
     {
         public override string Name => "hello";
@@ -13,7 +11,7 @@ namespace DummyForgeSharpBot.Commands
 
         public override void Run(Context context)
         {
-            context.Bot.Client.CreateMessage(context.Message.ChannelId, "Hello world!");
+            context.Reply("Hello world!");
         }
     }
 }
