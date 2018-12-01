@@ -21,11 +21,21 @@
 
         public static string MentionChannel(string channelId)
         {
+            if (channelId == null)
+            {
+                return null;
+            }
+
             return $"<#{channelId}>";
         }
 
         public static string MentionRole(string roleId)
         {
+            if (roleId == null)
+            {
+                return null;
+            }
+
             return $"<@&{roleId}>";
         }
     }

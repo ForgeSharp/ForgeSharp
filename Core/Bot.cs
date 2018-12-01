@@ -4,6 +4,7 @@ using ForgeSharp.Commands;
 using DNet.Structures;
 using DNet;
 using DNet.Socket;
+using ForgeSharp.Services;
 
 namespace ForgeSharp.Core
 {
@@ -18,6 +19,7 @@ namespace ForgeSharp.Core
     {
         public readonly string Token;
         public readonly CommandHandler CommandHandler;
+        public readonly ServiceManager ServiceManager;
         public readonly Client Client;
         public readonly BotOptions Options;
 
@@ -27,6 +29,7 @@ namespace ForgeSharp.Core
             this.Options = options;
             this.Client = new Client();
             this.CommandHandler = new CommandHandler();
+            this.ServiceManager = new ServiceManager();
 
             // Setup
             this.SetupEvents();
@@ -36,35 +39,37 @@ namespace ForgeSharp.Core
         {
             SocketHandle handle = this.Client.GetHandle();
 
-            handle.OnMessageCreate += (object sender, Message message) =>
-            {
-                // Ignore empty messages
-                if (message.Content == null)
-                {
-                    return;
-                }
-                // Ignore bots
-                else if (this.Options.IgnoreBots && message.Author.Bot == true)
-                {
-                    return;
-                }
-                else if (message.Content.StartsWith(this.Options.Prefix))
-                {
-                    string commandBase = CommandParser.GetBase(message.Content, this.Options.Prefix);
+            handle.OnMessageCreate += this.HandleMessage;
+        }
 
-                    if (this.CommandHandler.IsRegistered(commandBase))
+        private void HandleMessage(object sender, Message message)
+        {
+            // Ignore empty messages
+            if (message.Content == null)
+            {
+                return;
+            }
+            // Ignore bots
+            else if (this.Options.IgnoreBots && message.Author.Bot == true)
+            {
+                return;
+            }
+            else if (message.Content.StartsWith(this.Options.Prefix))
+            {
+                string commandBase = CommandParser.GetBase(message.Content, this.Options.Prefix);
+
+                if (this.CommandHandler.IsRegistered(commandBase))
+                {
+                    if (!this.CommandHandler.Run(commandBase, new Context()
                     {
-                        if (!this.CommandHandler.Run(commandBase, new Context()
-                        {
-                            Bot = this,
-                            Message = message
-                        }))
-                        {
-                            Console.WriteLine($"Command '{commandBase}' failed to run");
-                        }
+                        Bot = this,
+                        Message = message
+                    }))
+                    {
+                        Console.WriteLine($"Command '{commandBase}' failed to run");
                     }
                 }
-            };
+            }
         }
 
         public Task Connect()

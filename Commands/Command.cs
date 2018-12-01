@@ -1,45 +1,7 @@
-using System;
-using ForgeSharp.Core;
-using ForgeSharp.Fragments;
-using DNet.Structures;
-
-namespace ForgeSharp.Commands
+﻿namespace ForgeSharp.Commands
 {
-    public abstract class GenericCommand : IPackage, IDisposable
-    {
-        public abstract string Name { get; }
-
-        public abstract string Description { get; }
-
-        public abstract string Author { get; }
-
-        public abstract string Version { get; }
-
-        public abstract void Run(Context context);
-
-        public virtual bool MayRun(Context context)
-        {
-            return true;
-        }
-
-        public virtual void Dispose()
-        {
-            return;
-        }
-    }
-
     public abstract class Command : GenericCommand
     {
         //
-    }
-
-    public class CommandName : Attribute
-    {
-        public readonly string Name;
-
-        public CommandName(string name)
-        {
-            this.Name = name;
-        }
     }
 }

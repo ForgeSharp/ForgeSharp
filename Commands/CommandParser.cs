@@ -1,4 +1,6 @@
 using DNet.Structures;
+using System;
+using System.Linq;
 
 namespace ForgeSharp.Commands {
     public static class CommandParser
@@ -10,14 +12,18 @@ namespace ForgeSharp.Commands {
                 return null;
             }
 
-            string[] split = commandString.Split(prefix);
+            return commandString.Substring(prefix.Length).Split(" ")[0];
+        }
 
-            if (split.Length > 1)
+        // TODO: Add support for quoted arguments, ex. "hello world"
+        public static string[] GetArguments(string commandString)
+        {
+            if (commandString == null)
             {
-                return split[1].Split(" ")[0];
+                return null;
             }
 
-            return split[0];
+            return commandString.Trim().Split(" ").Skip(1).ToArray();
         }
 
         public static string GetBase(Message message, string prefix)
