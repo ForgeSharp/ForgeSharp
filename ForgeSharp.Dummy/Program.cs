@@ -32,7 +32,7 @@ namespace DummyForgeSharpBot
             };
 
             // Register commands
-            bot.CommandHandler.RegisterMultiple(
+            bot.CommandHandler.RegisterMultipleByType(
                 typeof(Commands.Hello)
             );
 

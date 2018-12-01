@@ -10,14 +10,14 @@ namespace ForgeSharp.Commands {
                 return false;
             }
 
-            GenericCommand instance = this.CreateInstance(name);
+            GenericCommand command = this.fragments[name];
 
-            if (!instance.MayRun(context))
+            if (!command.MayRun(context))
             {
                 return false;
             }
 
-            instance.Run(context);
+            command.Run(context);
 
             return true;
         }
@@ -25,7 +25,7 @@ namespace ForgeSharp.Commands {
         public bool RunIgnoringConditions(string name, Context context)
         {
             if (this.IsRegistered(name)) {
-                this.CreateInstance(name).Run(context);
+                this.fragments[name].Run(context);
 
                 return true;
             }

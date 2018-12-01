@@ -29,7 +29,7 @@ namespace ForgeSharp.Core
             this.Options = options;
             this.Client = new Client();
             this.CommandHandler = new CommandHandler();
-            this.ServiceManager = new ServiceManager();
+            this.ServiceManager = new ServiceManager(this);
 
             // Setup
             this.SetupEvents();

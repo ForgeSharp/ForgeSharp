@@ -1,55 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ForgeSharp.Fragments
 {
     public abstract class FragmentManager<FragmentType> where FragmentType : IFragment
     {
-        protected Dictionary<string, Type> fragments = new Dictionary<string, Type>();
-
-        public virtual Type GetType(string name)
-        {
-            return this.fragments[name];
-        }
+        protected Dictionary<string, FragmentType> fragments = new Dictionary<string, FragmentType>();
 
         // TODO: Verify type is typeof(Command)?
         // TODO: Returning boolean + throwing
-        public bool Register(Type type)
+        public bool Register(FragmentType fragment)
         {
-            FragmentIdentifierAttribute identifierAttribute = type.GetCustomAttributes(typeof(FragmentIdentifierAttribute), true).FirstOrDefault() as FragmentIdentifierAttribute;
-
-            if (identifierAttribute != null)
-            {
-                this.fragments.Add(identifierAttribute.Name, type);
-
-                return true;
-            }
-            else
-            {
-                throw new Exception($"Fragment class '{type.Name}' is missing required FragmentIdentifier attribute");
-            }
+            // TODO: May override already existing fragments
+            this.fragments.Add(fragment.Name, fragment);
 
             return false;
         }
 
-        public virtual FragmentType CreateInstance(string name)
+        public bool RegisterByType(Type type)
         {
-            return this.ActivateInstance(this.GetType(name));
+            FragmentType fragment = this.CreateInstance(type);
+
+            return this.Register(fragment);
         }
 
-        public virtual FragmentType ActivateInstance(Type type)
+        public virtual int RegisterMultipleByType(params Type[] types)
         {
-            // TODO: Must ensure type to be instanceof Command or GenericCommand
-            return (FragmentType)Activator.CreateInstance(type);
+            int registered = 0;
+
+            for (int i = 0; i < types.Length; i++)
+            {
+                if (this.RegisterByType(types[i]))
+                {
+                    registered++;
+                }
+            }
+
+            return registered;
         }
 
-        public virtual bool IsRegistered(string name)
-        {
-            return this.fragments.ContainsKey(name);
-        }
-
-        public virtual int RegisterMultiple(params Type[] fragments)
+        public virtual int RegisterMultiple(params FragmentType[] fragments)
         {
             int registered = 0;
 
@@ -62,6 +52,16 @@ namespace ForgeSharp.Fragments
             }
 
             return registered;
+        }
+
+        public virtual FragmentType CreateInstance(Type type)
+        {
+            return (FragmentType)Activator.CreateInstance(type);
+        }
+
+        public virtual bool IsRegistered(string name)
+        {
+            return this.fragments.ContainsKey(name);
         }
     }
 }

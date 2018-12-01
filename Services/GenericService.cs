@@ -26,5 +26,10 @@ namespace ForgeSharp.Services
         {
             //
         }
+
+        public virtual bool MayStart()
+        {
+            return true;
+        }
     }
 }
