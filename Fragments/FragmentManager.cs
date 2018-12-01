@@ -6,7 +6,7 @@ namespace ForgeSharp.Fragments
 {
     public abstract class FragmentManager<FragmentType> where FragmentType : IFragment
     {
-        protected Dictionary<string, Type> fragments;
+        protected Dictionary<string, Type> fragments = new Dictionary<string, Type>();
 
         public virtual Type GetType(string name)
         {
