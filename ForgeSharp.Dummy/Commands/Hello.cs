@@ -1,6 +1,6 @@
 ﻿using ForgeSharp.Commands;
 
-namespace DummyForgeSharpBot.Commands
+namespace ForgeSharp.Dummy.Commands
 {
     public class Hello : GenericCommand
     {

@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace DummyForgeSharpBot
+namespace ForgeSharp.Dummy
 {
     public class Program
     {
