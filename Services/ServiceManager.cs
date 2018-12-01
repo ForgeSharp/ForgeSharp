@@ -3,7 +3,7 @@ using ForgeSharp.Fragments;
 
 namespace ForgeSharp.Services
 {
-    public class ServiceManager : FragmentManager<GenericService>
+    public class ServiceManager : RunningServiceManager<GenericService>
     {
         private readonly Bot bot;
 
