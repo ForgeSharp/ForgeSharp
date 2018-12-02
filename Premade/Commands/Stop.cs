@@ -12,9 +12,9 @@ namespace ForgeSharp.Premade.Commands
         public override string Version => "1.0.0";
 
         // TODO
-        public override void Run(Context context)
+        public override async void Run(Context context)
         {
-            context.Reply("Stopping the application ...");
+            await context.Reply("Stopping the application ...");
             context.Bot.Shutdown();
         }
     }
