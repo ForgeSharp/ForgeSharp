@@ -27,7 +27,7 @@ namespace ForgeSharp.Premade.Commands
             if (msg != null)
             {
                 stopWatch.Stop();
-                await msg.Edit($":ping_pong: Pong! {stopWatch.ElapsedMilliseconds}ms");
+                await msg.Edit($":ping_pong: Pong! ~{stopWatch.ElapsedMilliseconds}ms");
             }
         }
     }

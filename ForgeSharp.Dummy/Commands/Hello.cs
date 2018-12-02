@@ -9,7 +9,7 @@ namespace ForgeSharp.Dummy.Commands
         public override string Author => "CloudRex <cloudrex@outlook.com>";
         public override string Version => "1.0.0";
 
-        public override async void Run(Context context)
+        public override void Run(Context context)
         {
             context.Reply("Hello world!");
         }
