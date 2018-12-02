@@ -1,14 +1,13 @@
 ﻿using ForgeSharp.Commands;
+using ForgeSharp.Core;
 
 namespace ForgeSharp.Premade.Commands
 {
-    public class Stop : Command
+    public class Stop : PremadeCommand
     {
         public override string Name => "stop";
 
         public override string Description => "Stop the application";
-
-        public override string Author => "CloudRex <cloudrex@outlook.com>";
 
         public override string Version => "1.0.0";
 
