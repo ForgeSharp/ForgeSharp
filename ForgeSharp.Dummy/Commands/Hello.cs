@@ -2,7 +2,7 @@
 
 namespace ForgeSharp.Dummy.Commands
 {
-    public class Hello : GenericCommand
+    internal class Hello : GenericCommand
     {
         public override string Name => "hello";
         public override string Description => "Says hello world";
