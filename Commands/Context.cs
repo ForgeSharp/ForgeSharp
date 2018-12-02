@@ -1,5 +1,7 @@
 using ForgeSharp.Core;
 using DNet.Structures;
+using DNet.Core;
+using System.Threading.Tasks;
 
 namespace ForgeSharp.Commands
 {
@@ -9,10 +11,10 @@ namespace ForgeSharp.Commands
         public Bot Bot { get; set; }
         public Message Message { get; set; }
 
-        public void Reply(string message, bool mention = false)
+        public Task<Message> Reply(string message, bool mention = false)
         {
             // TODO: Verified email?
-            this.Bot.Client.CreateMessage(this.Message.ChannelId, mention ? $"{Utils.Mention(this.Message.Author.Id)}, {message}" : message);
+            return this.Bot.Client.toolbox.CreateMessage(this.Message.ChannelId, mention ? $"{Utils.Mention(this.Message.Author.Id)}, {message}" : message);
         }
     }
 }

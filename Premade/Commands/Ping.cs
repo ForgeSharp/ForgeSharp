@@ -1,4 +1,7 @@
-﻿using ForgeSharp.Commands;
+﻿using DNet.Structures;
+using ForgeSharp.Commands;
+using System;
+using System.Diagnostics;
 
 namespace ForgeSharp.Premade.Commands
 {
@@ -12,10 +15,20 @@ namespace ForgeSharp.Premade.Commands
 
         public override string Version => "1.0.0";
 
-        // TODO
-        public override void Run(Context context)
+        // TODO: Measure time
+        public override async void Run(Context context)
         {
-            context.Reply("Ping?");
+            Stopwatch stopWatch = new Stopwatch();
+
+            stopWatch.Start();
+
+            Message msg = await context.Reply("Ping?");
+
+            if (msg != null)
+            {
+                stopWatch.Stop();
+                await msg.Edit($":ping_pong: Pong! {stopWatch.ElapsedMilliseconds}ms");
+            }
         }
     }
 }
