@@ -9,8 +9,6 @@ namespace ForgeSharp.Premade.Commands
 
         public override string Description => "Stop the application";
 
-        public override string Version => "1.0.0";
-
         // TODO
         public override async void Run(Context context)
         {

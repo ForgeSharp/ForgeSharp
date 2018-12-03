@@ -1,6 +1,5 @@
 using ForgeSharp.Core;
 using DNet.Structures;
-using DNet.Core;
 using System.Threading.Tasks;
 
 namespace ForgeSharp.Commands

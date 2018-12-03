@@ -1,17 +1,27 @@
-﻿using ForgeSharp.Commands;
+﻿using DNet.Structures.Guilds;
+using ForgeSharp.Commands;
+using ForgeSharp.Core;
 
 namespace ForgeSharp.Dummy.Commands
 {
-    internal class Hello : GenericCommand
+    internal class Hello : PremadeCommand
     {
         public override string Name => "hello";
+
         public override string Description => "Says hello world";
-        public override string Author => "CloudRex <cloudrex@outlook.com>";
-        public override string Version => "1.0.0";
 
         public override void Run(Context context)
         {
-            context.Reply("Hello world!");
+            Guild g = context.Message.Guild;
+
+            if (g != null)
+            {
+                context.Reply($"This guild's name is: {g.Name}");
+            }
+            else
+            {
+                context.Reply("Could not access guild!");
+            }
         }
     }
 }

@@ -7,11 +7,11 @@ namespace ForgeSharp.Commands
     {
         public abstract string Name { get; }
 
-        public abstract string Description { get; }
+        public virtual string Description { get; } = "No description provided.";
 
-        public abstract string Author { get; }
+        public virtual string Author { get; } = "Anonymous";
 
-        public abstract string Version { get; }
+        public virtual string Version { get; } = "1.0.0";
 
         public abstract void Run(Context context);
 

@@ -11,8 +11,6 @@ namespace ForgeSharp.Premade.Commands
 
         public override string Description => "Displays the bot's latency";
 
-        public override string Version => "1.0.0";
-
         // TODO: Measure time
         public override async void Run(Context context)
         {
