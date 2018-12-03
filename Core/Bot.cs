@@ -5,6 +5,7 @@ using DNet.Structures;
 using DNet;
 using DNet.Socket;
 using ForgeSharp.Services;
+using DNet.ClientStructures;
 
 namespace ForgeSharp.Core
 {

@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForgeSharp.Tests", "ForgeSh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNet", "..\dnet\DNet.csproj", "{2C4E5113-4C29-4A0E-804A-09505269FCAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceNetwork", "..\ServiceNetwork\ServiceNetwork.csproj", "{FF316BE8-69DF-44CE-A42A-7E3BA2FECAC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{2C4E5113-4C29-4A0E-804A-09505269FCAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C4E5113-4C29-4A0E-804A-09505269FCAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C4E5113-4C29-4A0E-804A-09505269FCAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF316BE8-69DF-44CE-A42A-7E3BA2FECAC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF316BE8-69DF-44CE-A42A-7E3BA2FECAC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF316BE8-69DF-44CE-A42A-7E3BA2FECAC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF316BE8-69DF-44CE-A42A-7E3BA2FECAC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
