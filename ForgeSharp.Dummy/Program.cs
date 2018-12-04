@@ -1,4 +1,5 @@
-﻿using ForgeSharp.Core;
+﻿using DNet.API.Gateway;
+using ForgeSharp.Core;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace ForgeSharp.Dummy
             });
 
             // Setup events
-            bot.Client.GetHandle().OnReady += (object sender, EventArgs e) => {
+            bot.Client.GetHandle().OnReady += (object sender, ReadyEvent e) => {
                 Console.WriteLine("Bot is ready");
             };
 
