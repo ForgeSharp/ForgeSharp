@@ -4,10 +4,13 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="DNet\**" />
     <Compile Remove="ForgeSharp.Dummy\**" />
     <Compile Remove="ForgeSharp.Tests\**" />
+    <EmbeddedResource Remove="DNet\**" />
     <EmbeddedResource Remove="ForgeSharp.Dummy\**" />
     <EmbeddedResource Remove="ForgeSharp.Tests\**" />
+    <None Remove="DNet\**" />
     <None Remove="ForgeSharp.Dummy\**" />
     <None Remove="ForgeSharp.Tests\**" />
   </ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using DNet.API.Gateway;
 using ForgeSharp.Core;
+using ForgeSharp.Logging;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -17,7 +18,8 @@ namespace ForgeSharp.Dummy
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("The .env file does not exist");
+                // TODO: Error
+                Logger.Verbose("The .env file does not exist");
 
                 return 1;
             }
@@ -29,7 +31,8 @@ namespace ForgeSharp.Dummy
 
             // Setup events
             bot.Client.GetHandle().OnReady += (object sender, ReadyEvent e) => {
-                Console.WriteLine("Bot is ready");
+                // TODO: Success
+                Logger.Verbose("Bot is ready");
             };
 
             // Register commands
@@ -37,6 +40,11 @@ namespace ForgeSharp.Dummy
                 typeof(Commands.Hello),
                 typeof(Premade.Commands.Ping),
                 typeof(Premade.Commands.Stop)
+            );
+
+            // Register services
+            bot.ServiceManager.RegisterMultipleByType(
+                typeof(Services.DummyService)
             );
 
             await bot.Connect();

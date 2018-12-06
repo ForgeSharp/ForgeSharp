@@ -1,4 +1,5 @@
 using ForgeSharp.Fragments;
+using System.Threading.Tasks;
 
 namespace ForgeSharp.Commands {
     public class CommandHandler : FragmentManager<GenericCommand> {
@@ -12,20 +13,26 @@ namespace ForgeSharp.Commands {
 
             GenericCommand command = this.fragments[name];
 
+            // TODO: MayRun should run async?
             if (!command.MayRun(context))
             {
                 return false;
             }
 
-            command.Run(context);
+            this.RunAsync(command, context);
 
             return true;
+        }
+
+        private void RunAsync(GenericCommand command, Context context)
+        {
+            Task.Run(() => command.Run(context));
         }
 
         public bool RunIgnoringConditions(string name, Context context)
         {
             if (this.IsRegistered(name)) {
-                this.fragments[name].Run(context);
+                this.RunAsync(this.fragments[name], context);
 
                 return true;
             }

@@ -15,6 +15,11 @@ namespace ForgeSharp.Services
 
         private Bot Bot { get; }
 
+        public GenericService()
+        {
+            this.Bot = null;
+        }
+
         public GenericService(Bot bot)
         {
             this.Bot = bot;

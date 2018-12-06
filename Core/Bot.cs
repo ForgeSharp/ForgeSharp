@@ -5,6 +5,7 @@ using DNet.Structures;
 using DNet.API;
 using ForgeSharp.Services;
 using DNet.ClientStructures;
+using ForgeSharp.Logging;
 
 namespace ForgeSharp.Core
 {
@@ -19,6 +20,10 @@ namespace ForgeSharp.Core
 
     public class Bot : IDisposable
     {
+        public static readonly BotOptions defaultBotOptions = new BotOptions() {
+            //
+        };
+
         public readonly string Token;
         public readonly CommandHandler CommandHandler;
         public readonly ServiceManager ServiceManager;
@@ -35,6 +40,11 @@ namespace ForgeSharp.Core
 
             // Setup
             this.SetupEvents();
+        }
+
+        public Bot(string token) : this(token, Bot.defaultBotOptions)
+        {
+            //
         }
 
         private void SetupEvents()
@@ -74,7 +84,8 @@ namespace ForgeSharp.Core
                         Message = message
                     }))
                     {
-                        Console.WriteLine($"Command '{commandBase}' failed to run");
+                        // TODO: Warning?
+                        Logger.Verbose($"Command '{commandBase}' failed to run");
                     }
                 }
             }
@@ -82,6 +93,18 @@ namespace ForgeSharp.Core
 
         public Task Connect()
         {
+            Console.Write("\nStarting services [ ");
+            Logger.Lock();
+
+            // Start services
+            this.ServiceManager.StartAll((GenericService service, int current, int left) =>
+            {
+                Console.Write(".");
+            });
+
+            Console.Write(" ]\n");
+            Logger.Release();
+
             return this.Client.Connect(this.Token);
         }
 
