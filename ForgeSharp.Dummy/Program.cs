@@ -8,7 +8,7 @@ namespace ForgeSharp.Dummy
 {
     internal class Program
     {
-        public static int Main(string[] args)
+        public static async Task<int> Main(string[] args)
         {
             // Attempt to load environment variables
             try
@@ -39,10 +39,10 @@ namespace ForgeSharp.Dummy
                 typeof(Premade.Commands.Stop)
             );
 
+            await bot.Connect();
+
             // TODO: Application will not stop
-            Task.WaitAll(Task.Run(bot.Connect));
-            Console.WriteLine("==> Connect finished");
-            Task.WaitAll(Task.Delay(-1));
+            await Task.Delay(-1);
 
             return 0;
         }
