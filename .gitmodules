@@ -1,0 +1,4 @@
+[submodule "DNet"]
+	path = DNet
+	url = https://github.com/ForgeSharp/DNet
+	branch = dev

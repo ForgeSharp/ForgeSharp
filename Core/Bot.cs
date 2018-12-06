@@ -2,8 +2,7 @@ using System;
 using System.Threading.Tasks;
 using ForgeSharp.Commands;
 using DNet.Structures;
-using DNet;
-using DNet.Socket;
+using DNet.API;
 using ForgeSharp.Services;
 using DNet.ClientStructures;
 
