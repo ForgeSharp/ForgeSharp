@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using ForgeSharp.Commands;
 using DNet.Structures;
@@ -16,11 +16,25 @@ namespace ForgeSharp.Core
         public bool IgnoreBots { get; set; } = true;
 
         public bool CaseSensitive { get; set; } = true;
+
+        public bool AnsciiLogo { get; set; } = true;
     }
 
     public class Bot : IDisposable
     {
-        public static readonly BotOptions defaultBotOptions = new BotOptions() {
+        private readonly string AnsciiLogo = @"
+ ███████╗ ██████╗ ██████╗  ██████╗ ███████╗
+ ██╔════╝██╔═══██╗██╔══██╗██╔════╝ ██╔════╝
+ █████╗  ██║   ██║██████╔╝██║  ███╗█████╗  
+ ██╔══╝  ██║   ██║██╔══██╗██║   ██║██╔══╝  
+ ██║     ╚██████╔╝██║  ██║╚██████╔╝███████╗
+ ╚═╝      ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝" + "\n";
+
+        // TODO: Use this event
+        public event EventHandler<ClientState> OnStateChange;
+
+        private static readonly BotOptions defaultBotOptions = new BotOptions()
+        {
             //
         };
 
@@ -93,17 +107,15 @@ namespace ForgeSharp.Core
 
         public Task Connect()
         {
-            Console.Write("\nStarting services [ ");
-            Logger.Lock();
+            if (this.Options.AnsciiLogo)
+            {
+                Console.WriteLine(this.AnsciiLogo);
+            }
 
             // Start services
-            this.ServiceManager.StartAll((GenericService service, int current, int left) =>
-            {
-                Console.Write(".");
-            });
+            int started = this.ServiceManager.StartAll();
 
-            Console.Write(" ]\n");
-            Logger.Release();
+            Logger.Verbose($"Started {started}/{this.ServiceManager.Count} services");
 
             return this.Client.Connect(this.Token);
         }

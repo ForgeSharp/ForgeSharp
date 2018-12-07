@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ForgeSharp.Services
 {
-    public abstract class RunningFragmentManager<FragmentType> : FragmentManager<FragmentType> where FragmentType : IFragment
+    public abstract class RunningFragmentManager<T> : FragmentManager<T> where T : IFragment
     {
         private readonly string[] running = new string[] { };
 

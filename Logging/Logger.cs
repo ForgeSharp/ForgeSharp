@@ -16,21 +16,40 @@ namespace ForgeSharp.Logging
             Console.WriteLine($"<{message.Time}> [{message.Source}] {message.Message}");
         }
 
+        public static void LockUntil(Action action)
+        {
+            Logger.Lock();
+            action();
+            Logger.Release();
+        }
+
         /// <summary>
         /// Lock the current queue
         /// </summary>
-        public static void Lock()
+        public static bool Lock()
         {
+            if (Logger.Locked)
+            {
+                return false;
+            }
+
             Logger.Locked = true;
             Logger.lockedQueue.AddRange(Logger.queue);
             Logger.queue.Clear();
+
+            return true;
         }
 
         /// <summary>
         /// Release the locked queue
         /// </summary>
-        public static void Release()
+        public static bool Release()
         {
+            if (!Logger.Locked)
+            {
+                return false;
+            }
+
             foreach (LogMessage message in Logger.lockedQueue)
             {
                 Logger.queue.Enqueue(message);
@@ -38,6 +57,8 @@ namespace ForgeSharp.Logging
 
             Logger.lockedQueue.Clear();
             Logger.ProcessQueue();
+
+            return true;
         }
 
         public static void ProcessQueue()
@@ -48,14 +69,44 @@ namespace ForgeSharp.Logging
             }
         }
 
-        public static void Verbose(string message, bool overrideLock = false, bool inline = false)
+        public static void Verbose(string message)
         {
-            Logger.Enqueue(message, overrideLock);
+            Logger.Enqueue(message);
         }
 
-        public static void Enqueue(LogMessage message, bool overrideLock = false)
+        public static void Success(string message)
         {
-            if (!Logger.Locked || overrideLock)
+            Logger.Enqueue(message, LogLevel.Success);
+        }
+
+        public static void Info(string message)
+        {
+            Logger.Enqueue(message, LogLevel.Info);
+        }
+
+        public static void Warning(string message)
+        {
+            Logger.Enqueue(message, LogLevel.Warning);
+        }
+
+        public static void Error(string message)
+        {
+            Logger.Enqueue(message, LogLevel.Error);
+        }
+
+        public static void Fatal(string message)
+        {
+            Logger.Enqueue(message, LogLevel.Fatal);
+        }
+
+        public static void Debug(string message)
+        {
+            Logger.Enqueue(message, LogLevel.Debug);
+        }
+
+        public static void Enqueue(LogMessage message)
+        {
+            if (!Logger.Locked)
             {
                 Logger.queue.Enqueue(message);
                 Logger.ProcessQueue();
@@ -66,9 +117,9 @@ namespace ForgeSharp.Logging
             }
         }
 
-        public static void Enqueue(string message, bool overrideLock = false)
+        public static void Enqueue(string message, LogLevel level = LogLevel.Verbose)
         {
-            Logger.Enqueue(Logger.CreateAnonymous(message), overrideLock);
+            Logger.Enqueue(Logger.CreateAnonymous(message, level));
         }
 
         public static LogMessage CreateAnonymous(string message, LogLevel level = LogLevel.Verbose)

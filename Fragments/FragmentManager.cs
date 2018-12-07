@@ -3,13 +3,15 @@ using System.Collections.Generic;
 
 namespace ForgeSharp.Fragments
 {
-    public abstract class FragmentManager<FragmentType> where FragmentType : IFragment
+    public abstract class FragmentManager<T> where T : IFragment
     {
-        protected Dictionary<string, FragmentType> fragments = new Dictionary<string, FragmentType>();
+        protected Dictionary<string, T> fragments = new Dictionary<string, T>();
+
+        public int Count => fragments.Count;
 
         // TODO: Verify type is typeof(Command)?
         // TODO: Returning boolean + throwing
-        public bool Register(FragmentType fragment)
+        public bool Register(T fragment)
         {
             // TODO: May override already existing fragments
             this.fragments.Add(fragment.Name.Trim().ToLower(), fragment);
@@ -19,7 +21,7 @@ namespace ForgeSharp.Fragments
 
         public bool RegisterByType(Type type)
         {
-            FragmentType fragment = this.CreateInstance(type);
+            T fragment = this.CreateInstance(type);
 
             return this.Register(fragment);
         }
@@ -39,7 +41,7 @@ namespace ForgeSharp.Fragments
             return registered;
         }
 
-        public virtual int RegisterMultiple(params FragmentType[] fragments)
+        public virtual int RegisterMultiple(params T[] fragments)
         {
             int registered = 0;
 
@@ -54,9 +56,9 @@ namespace ForgeSharp.Fragments
             return registered;
         }
 
-        public virtual FragmentType CreateInstance(Type type)
+        public virtual T CreateInstance(Type type)
         {
-            return (FragmentType)Activator.CreateInstance(type);
+            return (T)Activator.CreateInstance(type);
         }
 
         public virtual bool IsRegistered(string name)
