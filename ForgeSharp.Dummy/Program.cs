@@ -44,10 +44,7 @@ namespace ForgeSharp.Dummy
 
             // Register services
             bot.ServiceManager.RegisterMultipleByType(
-                typeof(Services.DummyService),
-                typeof(Services.DummyService2),
-                typeof(Services.DummyService3),
-                typeof(Services.DummyService4)
+                typeof(Services.DummyService)
             );
 
             await bot.Connect();
