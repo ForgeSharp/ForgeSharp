@@ -56,21 +56,11 @@ namespace ForgeSharp.Core
             this.Authenticator = new Authenticator(this);
             this.CommandHandler = new CommandHandler(this);
             this.ServiceManager = new ServiceManager(this);
-
-            // Setup
-            this.SetupEvents();
         }
 
         public Bot(string token) : this(token, Bot.defaultBotOptions)
         {
             //
-        }
-
-        private void SetupEvents()
-        {
-            SocketHandle handle = this.Client.GetHandle();
-
-            handle.OnMessageCreate += this.HandleMessage;
         }
 
         private void HandleMessage(object sender, Message message)
@@ -122,6 +112,11 @@ namespace ForgeSharp.Core
             {
                 Console.WriteLine(this.AnsciiLogo);
             }
+
+            // Setup events
+            SocketHandle handle = this.Client.GetHandle();
+
+            handle.OnMessageCreate += this.HandleMessage;
 
             // Start services
             if (this.ServiceManager.Count > 0)
