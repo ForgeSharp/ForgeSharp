@@ -1,4 +1,7 @@
-﻿namespace ForgeSharp.Core
+﻿using System;
+using System.Linq;
+
+namespace ForgeSharp.Core
 {
     public static class Utils
     {
@@ -37,6 +40,13 @@
             }
 
             return $"<@&{roleId}>";
+        }
+
+        public static T ExtractAttribute<T>(Type type) where T : Attribute
+        {
+            return type
+                .GetCustomAttributes(type, true)
+                .FirstOrDefault() as T;
         }
     }
 }

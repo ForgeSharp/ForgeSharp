@@ -1,8 +1,11 @@
-﻿using ForgeSharp.Commands;
+﻿using ForgeSharp.Constraints;
+using ForgeSharp.Commands;
 using ForgeSharp.Fragments;
+using ForgeSharp.Core;
 
 namespace ForgeSharp.Premade.Commands
 {
+    [RequireAuth(AuthLevel.BotOwner)]
     public class Stop : Command
     {
         public override Meta Meta => new Meta {

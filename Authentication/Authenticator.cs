@@ -1,8 +1,7 @@
-﻿using ForgeSharp.Attributes;
+﻿using ForgeSharp.Constraints;
 using ForgeSharp.Commands;
 using ForgeSharp.Core;
 using System;
-using System.Linq;
 
 namespace ForgeSharp.Authentication
 {
@@ -28,23 +27,28 @@ namespace ForgeSharp.Authentication
             return true;
         }
 
-        public AuthLevel GetAuthLevel(Type signature)
+        public AuthLevel GetAuthLevel(Type type)
         {
-            RequireAuthAttribute authRequirement = signature
-                .GetCustomAttributes(typeof(RequireAuthAttribute), true)
-                .FirstOrDefault() as RequireAuthAttribute;
+            RequireAuthAttribute authRequirement = Utils.ExtractAttribute<RequireAuthAttribute>(type);
 
-            if (authRequirement != null)
-            {
-                return authRequirement.level;
-            }
-
-            return AuthLevel.Default;
+            return authRequirement != null ? authRequirement.level : AuthLevel.Default;
         }
 
         public AuthLevel GetAuthLevel(GenericCommand command)
         {
             return this.GetAuthLevel(command.GetType());
+        }
+
+        public ChatEnvironment GetChatEnvironment(Type type)
+        {
+            RequireEnvAttribute envRequirement = Utils.ExtractAttribute<RequireEnvAttribute>(type);
+
+            return envRequirement != null ? envRequirement.environment : ChatEnvironment.Everywhere;
+        }
+
+        public ChatEnvironment GetChatEnvironment(GenericCommand command)
+        {
+            return this.GetChatEnvironment(command.GetType());
         }
     }
 }

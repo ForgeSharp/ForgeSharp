@@ -1,5 +1,5 @@
 using DNet.Structures;
-using ForgeSharp.Attributes;
+using ForgeSharp.Constraints;
 using ForgeSharp.Core;
 using ForgeSharp.Fragments;
 using System;
