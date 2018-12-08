@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 
 namespace ForgeSharp.Commands {
     public class CommandHandler : FragmentManager<GenericCommand> {
-
         public bool Run(string name, Context context)
         {
             if (!this.IsRegistered(name))

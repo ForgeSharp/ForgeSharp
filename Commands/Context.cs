@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 
 namespace ForgeSharp.Commands
 {
-    public class Context
+    public sealed class Context
     {
         // TODO: Should be readonly
         public Bot Bot { get; set; }
+
         public Message Message { get; set; }
 
         public Task<Message> Reply(string message, bool mention = false)

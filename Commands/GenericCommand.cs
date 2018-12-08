@@ -1,17 +1,11 @@
-using System;
 using ForgeSharp.Fragments;
+using System;
 
 namespace ForgeSharp.Commands
 {
-    public abstract class GenericCommand : IPackage, IDisposable
+    public abstract class GenericCommand : IFragment, IDisposable
     {
-        public abstract string Name { get; }
-
-        public virtual string Description { get; } = "No description provided.";
-
-        public virtual string Author { get; } = "Anonymous";
-
-        public virtual string Version { get; } = "1.0.0";
+        public abstract Meta Meta { get; }
 
         public abstract void Run(Context context);
 

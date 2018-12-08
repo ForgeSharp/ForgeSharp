@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ForgeSharp.Core;
+using System;
 using System.Collections.Generic;
 
 namespace ForgeSharp.Fragments
@@ -13,8 +14,14 @@ namespace ForgeSharp.Fragments
         // TODO: Returning boolean + throwing
         public bool Register(T fragment)
         {
+            // TODO: Regex-check names
+            if (fragment.Meta.Name == null)
+            {
+                throw new InvalidMetaException("Fragment must have a valid meta");
+            }
+
             // TODO: May override already existing fragments
-            this.fragments.Add(fragment.Name.Trim().ToLower(), fragment);
+            this.fragments.Add(fragment.Meta.Name.Trim().ToLower(), fragment);
 
             return false;
         }

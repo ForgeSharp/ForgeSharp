@@ -3,15 +3,9 @@ using ForgeSharp.Fragments;
 
 namespace ForgeSharp.Services
 {
-    public abstract class GenericService : IPackage
+    public abstract class GenericService : IFragment
     {
-        public abstract string Name { get; }
-
-        public abstract string Description { get; }
-
-        public abstract string Author { get; }
-
-        public abstract string Version { get; }
+        public abstract Meta Meta { get; }
 
         private Bot Bot { get; }
 

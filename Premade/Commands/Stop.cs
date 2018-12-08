@@ -1,13 +1,14 @@
 ﻿using ForgeSharp.Commands;
-using ForgeSharp.Core;
+using ForgeSharp.Fragments;
 
 namespace ForgeSharp.Premade.Commands
 {
-    public class Stop : PremadeCommand
+    public class Stop : Command
     {
-        public override string Name => "stop";
-
-        public override string Description => "Stop the application";
+        public override Meta Meta => new Meta {
+            Name = "stop",
+            Description = "Stop the application"
+        };
 
         // TODO
         public override async void Run(Context context)

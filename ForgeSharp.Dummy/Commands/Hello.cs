@@ -1,13 +1,14 @@
 ﻿using ForgeSharp.Commands;
-using ForgeSharp.Core;
+using ForgeSharp.Fragments;
 
 namespace ForgeSharp.Dummy.Commands
 {
-    internal class Hello : PremadeCommand
+    internal class Hello : Command
     {
-        public override string Name => "hello";
-
-        public override string Description => "Says hello world";
+        public override Meta Meta => new Meta
+        {
+            Name = "hello"
+        };
 
         public override void Run(Context context)
         {
