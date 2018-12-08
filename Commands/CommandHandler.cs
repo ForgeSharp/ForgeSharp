@@ -1,8 +1,22 @@
+using DNet.Structures;
+using ForgeSharp.Attributes;
+using ForgeSharp.Core;
 using ForgeSharp.Fragments;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace ForgeSharp.Commands {
-    public class CommandHandler : FragmentManager<GenericCommand> {
+namespace ForgeSharp.Commands
+{
+    public sealed class CommandHandler : FragmentManager<GenericCommand>
+    {
+        private readonly Bot bot;
+
+        public CommandHandler(Bot bot)
+        {
+            this.bot = bot;
+        }
+
         public bool Run(string name, Context context)
         {
             if (!this.IsRegistered(name))
@@ -12,8 +26,11 @@ namespace ForgeSharp.Commands {
 
             GenericCommand command = this.fragments[name];
 
+            if (!this.bot.Authenticator.Authenticate(command, context)) {
+                return false;
+            }
             // TODO: MayRun should run async?
-            if (!command.MayRun(context))
+            else if (!command.MayRun(context))
             {
                 return false;
             }
@@ -30,13 +47,24 @@ namespace ForgeSharp.Commands {
 
         public bool RunIgnoringConditions(string name, Context context)
         {
-            if (this.IsRegistered(name)) {
+            if (this.IsRegistered(name))
+            {
                 this.RunAsync(this.fragments[name], context);
 
                 return true;
             }
 
             return false;
+        }
+
+        public AuthLevel DetermineAuthLevel(User user)
+        {
+            if (this.bot.Options.OwnerId == user.Id)
+            {
+                return AuthLevel.BotOwner;
+            }
+
+            return AuthLevel.Default;
         }
     }
 }

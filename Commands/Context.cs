@@ -11,6 +11,8 @@ namespace ForgeSharp.Commands
 
         public Message Message { get; set; }
 
+        public CommandIssuer Issuer { get; set; }
+
         public Task<Message> Reply(string message, bool mention = false)
         {
             // TODO: Verified email?

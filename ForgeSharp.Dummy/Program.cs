@@ -18,8 +18,7 @@ namespace ForgeSharp.Dummy
             }
             catch (FileNotFoundException)
             {
-                // TODO: Error
-                Logger.Verbose("The .env file does not exist");
+                Logger.Error("The .env file does not exist");
 
                 return 1;
             }
@@ -31,8 +30,7 @@ namespace ForgeSharp.Dummy
 
             // Setup events
             bot.Client.GetHandle().OnReady += (object sender, ReadyEvent e) => {
-                // TODO: Success
-                Logger.Verbose("Bot is ready");
+                Logger.Success("Bot is ready");
             };
 
             // Register commands

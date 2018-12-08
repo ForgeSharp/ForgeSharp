@@ -6,6 +6,7 @@ using DNet.API;
 using ForgeSharp.Services;
 using DNet.ClientStructures;
 using ForgeSharp.Logging;
+using ForgeSharp.Authentication;
 
 namespace ForgeSharp.Core
 {
@@ -18,6 +19,8 @@ namespace ForgeSharp.Core
         public bool CaseSensitive { get; set; } = true;
 
         public bool AnsciiLogo { get; set; } = true;
+
+        public string OwnerId { get; set; }
     }
 
     public class Bot : IDisposable
@@ -41,6 +44,7 @@ namespace ForgeSharp.Core
         public readonly string Token;
         public readonly CommandHandler CommandHandler;
         public readonly ServiceManager ServiceManager;
+        public readonly Authenticator Authenticator;
         public readonly Client Client;
         public readonly BotOptions Options;
 
@@ -49,7 +53,8 @@ namespace ForgeSharp.Core
             this.Token = token;
             this.Options = options;
             this.Client = new Client();
-            this.CommandHandler = new CommandHandler();
+            this.Authenticator = new Authenticator(this);
+            this.CommandHandler = new CommandHandler(this);
             this.ServiceManager = new ServiceManager(this);
 
             // Setup
@@ -92,10 +97,16 @@ namespace ForgeSharp.Core
 
                 if (this.CommandHandler.IsRegistered(commandBase))
                 {
-                    if (!this.CommandHandler.Run(commandBase, new Context()
+                    if (!this.CommandHandler.Run(commandBase, new Context
                     {
                         Bot = this,
-                        Message = message
+                        Message = message,
+
+                        Issuer = new CommandIssuer {
+                            Level = CommandHandler.DetermineAuthLevel(message.Author),
+                            Member = message.Member,
+                            User = message.Author
+                        }
                     }))
                     {
                         // TODO: Warning?
@@ -113,9 +124,12 @@ namespace ForgeSharp.Core
             }
 
             // Start services
-            int started = this.ServiceManager.StartAll();
+            if (this.ServiceManager.Count > 0)
+            {
+                int started = this.ServiceManager.StartAll();
 
-            Logger.Verbose($"Started {started}/{this.ServiceManager.Count} services");
+                Logger.Verbose($"Started {started}/{this.ServiceManager.Count} services");
+            }
 
             return this.Client.Connect(this.Token);
         }
