@@ -8,7 +8,7 @@ namespace ForgeSharp.Services
         // TODO: Better name
         public delegate void ActionAllCallback(GenericService service, int current, int left);
 
-        private readonly Bot bot;
+        protected readonly Bot bot;
 
         public ServiceManager(Bot bot)
         {
