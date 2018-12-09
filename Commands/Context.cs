@@ -1,6 +1,7 @@
 using ForgeSharp.Core;
 using DNet.Structures;
 using System.Threading.Tasks;
+using DNet.Structures.Messages;
 
 namespace ForgeSharp.Commands
 {
@@ -9,7 +10,7 @@ namespace ForgeSharp.Commands
         // TODO: Should be readonly
         public Bot Bot { get; set; }
 
-        public Message Message { get; set; }
+        public GenericMessage Message { get; set; }
 
         public CommandIssuer Issuer { get; set; }
 

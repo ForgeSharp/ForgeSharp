@@ -1,5 +1,6 @@
 ﻿using DNet.Structures;
 using DNet.Structures.Channels;
+using DNet.Structures.Messages;
 using ForgeSharp.Commands;
 using System;
 using System.Linq;
@@ -90,7 +91,7 @@ namespace ForgeSharp.Core
             }
         }
 
-        public static ChatEnvironment? DetermineChatEnvironment(Message message)
+        public static ChatEnvironment? DetermineChatEnvironment(GenericMessage message)
         {
             return Utils.DetermineChatEnvironment(message.Channel);
         }

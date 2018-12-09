@@ -7,6 +7,7 @@ using ForgeSharp.Services;
 using DNet.ClientStructures;
 using ForgeSharp.Logging;
 using ForgeSharp.Authentication;
+using DNet.Structures.Messages;
 
 namespace ForgeSharp.Core
 {
@@ -87,7 +88,7 @@ namespace ForgeSharp.Core
             return this;
         }
 
-        protected void HandleMessage(object sender, Message message)
+        protected void HandleMessage(object sender, GenericMessage message)
         {
             // TODO: Message.Content should be automatically trimmed by DNet upon being received
             // Ignore empty messages
@@ -119,7 +120,7 @@ namespace ForgeSharp.Core
                         Issuer = new CommandIssuer
                         {
                             Level = CommandHandler.DetermineAuthLevel(message.Author),
-                            Member = message.Member,
+                            Member = message is Message ? (message as Message).Member : null,
                             User = message.Author
                         }
                     });
