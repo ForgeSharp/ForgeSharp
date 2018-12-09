@@ -6,9 +6,9 @@ using System;
 namespace ForgeSharp.Authentication
 {
     // TODO
-    public sealed class Authenticator
+    public class Authenticator
     {
-        private readonly Bot bot;
+        protected readonly Bot bot;
 
         public Authenticator(Bot bot)
         {

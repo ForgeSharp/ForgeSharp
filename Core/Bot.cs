@@ -25,7 +25,7 @@ namespace ForgeSharp.Core
 
     public class Bot : IDisposable
     {
-        private readonly string AnsciiLogo = @"
+        protected readonly string AnsciiLogo = @"
  ███████╗ ██████╗ ██████╗  ██████╗ ███████╗
  ██╔════╝██╔═══██╗██╔══██╗██╔════╝ ██╔════╝
  █████╗  ██║   ██║██████╔╝██║  ███╗█████╗  
@@ -36,15 +36,18 @@ namespace ForgeSharp.Core
         // TODO: Use this event
         public event EventHandler<ClientState> OnStateChange;
 
-        private static readonly BotOptions defaultBotOptions = new BotOptions()
+        protected static readonly BotOptions defaultBotOptions = new BotOptions()
         {
             //
         };
 
+        public CommandHandler CommandHandler { get; protected set; }
+
+        public ServiceManager ServiceManager { get; protected set; }
+
+        public Authenticator Authenticator { get; protected set; }
+
         public readonly string Token;
-        public readonly CommandHandler CommandHandler;
-        public readonly ServiceManager ServiceManager;
-        public readonly Authenticator Authenticator;
         public readonly Client Client;
         public readonly BotOptions Options;
 
@@ -63,7 +66,28 @@ namespace ForgeSharp.Core
             //
         }
 
-        private void HandleMessage(object sender, Message message)
+        public Bot UseAuthenticator(Authenticator authenticator)
+        {
+            this.Authenticator = authenticator;
+
+            return this;
+        }
+
+        public Bot UseCommandHandler(CommandHandler handler)
+        {
+            this.CommandHandler = handler;
+
+            return this;
+        }
+
+        public Bot UseServiceManager(ServiceManager manager)
+        {
+            this.ServiceManager = manager;
+
+            return this;
+        }
+
+        protected void HandleMessage(object sender, Message message)
         {
             // TODO: Message.Content should be automatically trimmed by DNet upon being received
             // Ignore empty messages

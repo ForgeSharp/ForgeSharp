@@ -1,16 +1,13 @@
 using DNet.Structures;
-using ForgeSharp.Constraints;
 using ForgeSharp.Core;
 using ForgeSharp.Fragments;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ForgeSharp.Commands
 {
-    public sealed class CommandHandler : FragmentManager<GenericCommand>
+    public class CommandHandler : FragmentManager<GenericCommand>
     {
-        private readonly Bot bot;
+        protected readonly Bot bot;
 
         public CommandHandler(Bot bot)
         {
@@ -40,7 +37,7 @@ namespace ForgeSharp.Commands
             return ExecutionResult.OK;
         }
 
-        private void RunAsync(GenericCommand command, Context context)
+        protected void RunAsync(GenericCommand command, Context context)
         {
             Task.Run(() => command.Run(context));
         }
