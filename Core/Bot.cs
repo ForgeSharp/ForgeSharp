@@ -87,20 +87,23 @@ namespace ForgeSharp.Core
 
                 if (this.CommandHandler.IsRegistered(commandBase))
                 {
-                    if (!this.CommandHandler.Run(commandBase, new Context
+                    ExecutionResult result = this.CommandHandler.Run(commandBase, new Context
                     {
                         Bot = this,
                         Message = message,
 
-                        Issuer = new CommandIssuer {
+                        Issuer = new CommandIssuer
+                        {
                             Level = CommandHandler.DetermineAuthLevel(message.Author),
                             Member = message.Member,
                             User = message.Author
                         }
-                    }))
+                    });
+
+                    if (result != ExecutionResult.OK)
                     {
                         // TODO: Warning?
-                        Logger.Verbose($"Command '{commandBase}' failed to run");
+                        Logger.Verbose($"Command '{commandBase}' failed to run: {result} ({(int)result})");
                     }
                 }
             }

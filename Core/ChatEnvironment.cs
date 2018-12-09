@@ -4,8 +4,8 @@
     {
         Everywhere,
         Guild,
-        Dm,
-        GroupDm,
+        DM,
+        Group,
         Nsfw
     }
 }

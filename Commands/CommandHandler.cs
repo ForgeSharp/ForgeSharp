@@ -17,27 +17,27 @@ namespace ForgeSharp.Commands
             this.bot = bot;
         }
 
-        public bool Run(string name, Context context)
+        public ExecutionResult Run(string name, Context context)
         {
             if (!this.IsRegistered(name))
             {
-                return false;
+                return ExecutionResult.NotRegistered;
             }
 
             GenericCommand command = this.fragments[name];
 
             if (!this.bot.Authenticator.Authenticate(command, context)) {
-                return false;
+                return ExecutionResult.NotAuthorized;
             }
             // TODO: MayRun should run async?
             else if (!command.MayRun(context))
             {
-                return false;
+                return ExecutionResult.CommandRefusedToRun;
             }
 
             this.RunAsync(command, context);
 
-            return true;
+            return ExecutionResult.OK;
         }
 
         private void RunAsync(GenericCommand command, Context context)

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DNet.Structures;
+using DNet.Structures.Channels;
+using ForgeSharp.Commands;
+using System;
 using System.Linq;
 
 namespace ForgeSharp.Core
@@ -45,8 +48,58 @@ namespace ForgeSharp.Core
         public static T ExtractAttribute<T>(Type type) where T : Attribute
         {
             return type
-                .GetCustomAttributes(type, true)
+                .GetCustomAttributes(typeof(T), true)
                 .FirstOrDefault() as T;
         }
+
+        public static ChatEnvironment? DetermineChatEnvironment(Channel channel)
+        {
+            if (channel == null)
+            {
+                return null;
+            }
+
+            switch (channel.Type)
+            {
+                case ChannelType.DM:
+                    {
+                        return ChatEnvironment.DM;
+                    }
+
+                case ChannelType.Group:
+                    {
+                        return ChatEnvironment.Group;
+                    }
+
+                case ChannelType.Text:
+                    {
+                        TextChannel textChannel = (TextChannel)channel;
+
+                        if (textChannel.NSFW)
+                        {
+                            return ChatEnvironment.Nsfw;
+                        }
+
+                        return ChatEnvironment.Guild;
+                    }
+
+                default:
+                    {
+                        throw new InvalidOperationException("Cannot determine chat environment of an invalid channel");
+                    }
+            }
+        }
+
+        public static ChatEnvironment? DetermineChatEnvironment(Message message)
+        {
+            return Utils.DetermineChatEnvironment(message.Channel);
+        }
+
+        public static ChatEnvironment? DetermineChatEnvironment(Context context)
+        {
+            return Utils.DetermineChatEnvironment(context.Message);
+        }
+
+        // TODO: bool IsTextBasedChannel()
     }
 }

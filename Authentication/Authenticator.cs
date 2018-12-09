@@ -18,8 +18,17 @@ namespace ForgeSharp.Authentication
         public bool Authenticate(GenericCommand command, Context context)
         {
             // TODO: Improve auth checks
-            if (this.GetAuthLevel(command) == AuthLevel.BotOwner
+            if (context.Bot.Options.OwnerId == null
+                || this.GetAuthLevel(command) == AuthLevel.BotOwner
                 && context.Issuer.User.Id != context.Bot.Options.OwnerId)
+            {
+                return false;
+            }
+
+            ChatEnvironment envValue = this.GetChatEnvironment(command);
+            ChatEnvironment? env = Utils.DetermineChatEnvironment(context);
+
+            if (!env.HasValue || (envValue != ChatEnvironment.Everywhere && envValue != env.Value))
             {
                 return false;
             }
@@ -29,7 +38,7 @@ namespace ForgeSharp.Authentication
 
         public AuthLevel GetAuthLevel(Type type)
         {
-            RequireAuthAttribute authRequirement = Utils.ExtractAttribute<RequireAuthAttribute>(type);
+            AuthorizeAttribute authRequirement = Utils.ExtractAttribute<AuthorizeAttribute>(type);
 
             return authRequirement != null ? authRequirement.level : AuthLevel.Default;
         }

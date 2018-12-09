@@ -5,7 +5,7 @@ using ForgeSharp.Core;
 
 namespace ForgeSharp.Premade.Commands
 {
-    [RequireAuth(AuthLevel.BotOwner)]
+    [Authorize(AuthLevel.BotOwner)]
     public class Stop : Command
     {
         public override Meta Meta => new Meta {

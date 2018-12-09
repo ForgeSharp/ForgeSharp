@@ -4,11 +4,11 @@ using System;
 namespace ForgeSharp.Constraints
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public sealed class RequireAuthAttribute : Attribute
+    public sealed class AuthorizeAttribute : Attribute
     {
         public readonly AuthLevel level;
 
-        public RequireAuthAttribute(AuthLevel level)
+        public AuthorizeAttribute(AuthLevel level)
         {
             this.level = level;
         }

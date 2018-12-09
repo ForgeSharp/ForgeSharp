@@ -1,5 +1,7 @@
 ﻿using DNet.Structures;
 using ForgeSharp.Commands;
+using ForgeSharp.Constraints;
+using ForgeSharp.Core;
 using ForgeSharp.Fragments;
 using System.Diagnostics;
 
@@ -13,7 +15,6 @@ namespace ForgeSharp.Premade.Commands
             Description = "Displays the bot's latency"
         };
 
-        // TODO: Measure time
         public override async void Run(Context context)
         {
             Stopwatch stopWatch = new Stopwatch();
